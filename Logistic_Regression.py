@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 %matplotlib inline
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 
@@ -20,6 +21,8 @@ X = ad_data[['Daily Time Spent on Site', 'Age', 'Area Income','Daily Internet Us
 y = ad_data['Clicked on Ad']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 model = LogisticRegression()
+predicted = cross_validation.cross_val_predict(model, X_train, y_train, cv=3)
 model.fit(X_train,y_train)
 pred = model.predict(X_test)
 print(classification_report(y_test,pred))
+print(classification_report(y_test,predicted))
